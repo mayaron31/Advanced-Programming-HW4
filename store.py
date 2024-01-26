@@ -134,7 +134,7 @@ class Store:
             TooManyMatchesError: If there are more than one matching items in the cart.
             ItemNotExistError: If the specified item does not exist in the shopping cart.
         """
-        fitting_items_in_cart:list[Item] = [item for item in self._shopping_cart.itemList if item_name in item.name] # create a list of matching items in the cart
+        fitting_items_in_cart = [item for item in self._shopping_cart.itemList if item_name in item.name] # create a list of matching items in the cart
 
         if fitting_items_in_cart:
             if len(fitting_items_in_cart) > 1: # more than 1 in store

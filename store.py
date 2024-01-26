@@ -37,18 +37,13 @@ class Store:
         items_from_shopping_cart = self._shopping_cart.itemList
         tags_from_shopping_cart = [hashtag for item in items_from_shopping_cart for hashtag in item.hashtags]#flattend list of all hashtags in items from shopping cart
 
-        item_tags_amount = [] # list of (item, count_of_common_tags)
+        # the next line will create a list of tuples in the form of (item, count_of_common_tags)
+        item_tags_amount = [(item, #first index of the tuple is item
+                              sum(1 for hashtag in item.hashtags #second index of the tuple is count of common tags. for every hastag in item's list of hastags
+                                       for tag_from_shopping_cart in tags_from_shopping_cart # for every hastag in shopping cart
+                                         if hashtag == tag_from_shopping_cart)) # if the two hastags are the same, increase the count by 1
+                                           for item in items] #for every item in the list of fitting items from the search
 
-        for item in items:
-            count = 0
-            for hashtag in item.hashtags:
-                for tag_from_shopping_cart in tags_from_shopping_cart:
-                    if hashtag == tag_from_shopping_cart:
-                        count += 1
-            
-            item_tags_amount.append((item, count))
-
-        
         return [item[0] for item in sorted(item_tags_amount, key=lambda x: (-x[1],x[0].name))] # the minus sign is to reverse only the tags amount, but left the lexo order the same
         
 

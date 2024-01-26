@@ -23,7 +23,7 @@ class Store:
 
 
     """"""
-    def _sorted_items(self, items:list[Item]) -> list:
+    def _sorted_items(self, items:list) -> list:
         """
         Sorts a list of items based on the number of common hashtags with items in the shopping cart.
 

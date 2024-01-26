@@ -31,8 +31,11 @@ class Store:
                         count += 1
             
             item_tags_amount.append((item, count))
+
+        #for item, count in item_tags_amount:
+            
         
-        return [item[0] for item in sorted(item_tags_amount, key=lambda x: (x[1],x[0].name))]
+        return [item[0] for item in sorted(item_tags_amount, key=lambda x: (-x[1],x[0].name))]
         
 
 
@@ -93,12 +96,13 @@ class Store:
     You may assume that no two items exist such that one's name is a substring of the other.
     """
     def add_item(self, item_name: str):
-        fitting_items = self.search_by_name(item_name) # search for items with matching name in store
+        fitting_items = [item for item in self._items if item_name in item.name] # search for items with matching name in store BUT not using the search by name because it returns only items that are not in the shopping cart already
         if fitting_items:
             if len(fitting_items) > 1: # more than 1 in store
                 raise errors_module.TooManyMatchesError
             else:
-                
+                if (self._shopping_cart.in_cart(fitting_items[0].name)):
+                    raise errors_module.ItemAlreadyExistsError
                 self._shopping_cart.add_item(fitting_items[0]) # add item to shopping cart
         else:
             raise errors_module.ItemNotExistError 
